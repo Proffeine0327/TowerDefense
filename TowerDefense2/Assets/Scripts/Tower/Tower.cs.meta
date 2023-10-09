@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 84bfe3d827b1e7e46b73cc457adae3b7
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - data: {instanceID: 0}
+  - hpbar: {instanceID: 0}
+  - bullet: {instanceID: 0}
+  - partToRotate: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
