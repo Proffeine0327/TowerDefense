@@ -6,6 +6,12 @@ public class Castle : TowerBase
 {
     public GameObject damageEffect;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        units.Add(this);
+    }
+
     protected override void Update()
     {
         hpbar.fillAmount = curhp / (float)data.maxhp;
@@ -16,12 +22,8 @@ public class Castle : TowerBase
         }
         if (curhp <= 0)
         {
-            gameObject.GetComponent<BoxCollider>().enabled = false;
+            units.Remove(this);
+            Destroy(gameObject);
         }
-    }
-
-    public override void Damage(int damageCount)
-    {
-        curhp -= damageCount; 
     }
 }

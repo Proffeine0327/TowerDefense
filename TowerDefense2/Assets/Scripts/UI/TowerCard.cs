@@ -39,6 +39,7 @@ public class TowerCard : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
 
         instance = Instantiate(data.prefeb);
         Singleton.Get<GridSetManager>().Active(true);
+        Singleton.Get<DownMenuUI>().State = DownMenuState.none;
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -50,5 +51,6 @@ public class TowerCard : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
         instance.GetComponent<TowerBase>().Set();
         instance = null;
         Singleton.Get<GridSetManager>().Active(false);
+        Singleton.Get<DownMenuUI>().State = DownMenuState.tower;
     }
 }

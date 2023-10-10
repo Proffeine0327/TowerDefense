@@ -147,8 +147,8 @@ Transform:
   m_GameObject: {fileID: 656814422490115232}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 656814421658875509}
   - {fileID: 7949527864726116809}
@@ -170,11 +170,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 258b0002da9ef514893757824767b1d1, type: 2}
   hpbar: {fileID: 7949527863226288959}
-  range: 20
+  bulletLine: {fileID: 7596047131354063627, guid: 6d6818ddd2ea5e945b22d8ffa448e88c, type: 3}
   bullet: {fileID: 4959480650491751425, guid: 51787e5726cd0574db2d8fbdc0a9a747, type: 3}
   firePoint: {fileID: 893298066421542108}
-  shotDelay: 0
-  attackDelay: 0
 --- !u!195 &656814422490115263
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -184,12 +182,12 @@ NavMeshAgent:
   m_GameObject: {fileID: 656814422490115232}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.32
+  m_Radius: 0.2
   m_Speed: 3
   m_Acceleration: 30
   avoidancePriority: 50
   m_AngularSpeed: 3000
-  m_StoppingDistance: 3
+  m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

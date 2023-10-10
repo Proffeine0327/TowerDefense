@@ -40,10 +40,10 @@ public class GameManager : MonoBehaviour
         //~2:30
         while(Singleton.Get<GameTimeManager>().PlayTime < 150)
         {
-            Instantiate(enemies[Random.Range(0, enemies.Length)], spawnPoints[Random.Range(0, spawnPoints.Length)]);
-            yield return new WaitForSeconds(Random.Range(10000, 1000000));
+            Instantiate(enemies[Random.Range(0, enemies.Length)], spawnPoints[Random.Range(0, spawnPoints.Length)].position, Quaternion.identity);
+            yield return new WaitForSeconds(Random.Range(0.3f, 3.5f));
         }
-        GameObject boss = Instantiate(this.boss, spawnPoints[Random.Range(0, spawnPoints.Length)]);
+        GameObject boss = Instantiate(this.boss, spawnPoints[Random.Range(0, spawnPoints.Length)].position, Quaternion.identity);
 
         yield return new WaitUntil(() => !boss);
     }

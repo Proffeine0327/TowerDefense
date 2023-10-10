@@ -610,12 +610,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 4
+  bulletLine: {fileID: 1759606607560820595, guid: 9a6ae76ade4ea9c4db78cc02e07d245c, type: 3}
   data: {fileID: 11400000, guid: 4b85fb7d8a88af24bb80d8beaf247c4c, type: 2}
   hpbar: {fileID: 522414909590070986}
-  maxCount: 0
   turnSpeed: 10
   maxShotDelay: 0.3
-  bullet: {fileID: 4959480650491751425, guid: def15c66489b5e742b3f00875f203184, type: 3}
   partToRotate: {fileID: 8615356487395242843}
   firePoint:
   - {fileID: 207206004200964063}
@@ -634,7 +633,7 @@ SphereCollider:
   m_GameObject: {fileID: 8615356487395242844}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0.68, z: 0}

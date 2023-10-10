@@ -52,29 +52,15 @@ public class Boss : EnemyBase
     private void Hit()
     {
         isAttacking = true;
-
         if (curAttackDelay < maxAttackDelay) return;
-
-        cloestTower.Damage(data.damage);
-
+        cloestTower.Damage(data.stats[0].damage);
         curAttackDelay = 0f;
-
         isAttacking = false;
     }
 
     private void Detected()
     {
         cloestTower = DetectTower();
-    }
-
-    private TowerBase DetectTower()
-    {
-        var dectations =
-                TowerBase.towers
-                .OrderBy(item => Vector3.Distance(item.transform.position, transform.position))
-                .ToArray();
-        if (dectations.Length > 0) return dectations[0];
-        return null;
     }
 
     public override void Damage(int damageCount)

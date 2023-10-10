@@ -19,8 +19,5 @@ public class Vision : TowerBase
         }
     }
 
-    public override void Damage(int damageCount)
-    {
-        
-    }
+    public override void Damage(int damageCount) { }
 }

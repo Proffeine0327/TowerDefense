@@ -9,8 +9,6 @@ public class Enemy : EnemyBase
 {
     [SerializeField] private GameObject bullet;
     [SerializeField] private Transform firePoint;
-    [SerializeField] private float shotDelay;
-    [SerializeField] private float attackDelay;
 
     protected override void Awake()
     {
@@ -21,56 +19,54 @@ public class Enemy : EnemyBase
     {
         base.Update();
 
-        Detected();        
+        Detected();
         Move();
         Attack();
     }
 
     private void Move()
     {
-        if(isAttacking) return;
-        if(nav == null) return;
-        if(cloestTower == null) return;
+        if (isAttacking) return;
+        if (nav == null) return;
+        if (cloestTower == null) return;
 
-        nav.SetDestination(cloestTower.transform.position);
+        if (Physics.Linecast(transform.position, cloestTower.transform.position, out var hit, LayerMask.GetMask("Tower")))
+        {
+            if (ReferenceEquals(cloestTower.transform, hit.transform))
+                nav.enabled = Vector3.Distance(transform.position, hit.point) >= data.stats[0].range - 0.1f;
+        }
+
+        if (nav.isActiveAndEnabled) nav.SetDestination(cloestTower.transform.position);
     }
 
     private void Attack()
     {
-        if(isAttacking) return;
-        if(cloestTower == null) return;
+        if (isAttacking) return;
+        if (cloestTower == null) return;
 
-        if(Vector3.Distance(cloestTower.transform.position, transform.position) < nav.stoppingDistance + 1)
+        if (Physics.Linecast(transform.position, cloestTower.transform.position, out var hit, LayerMask.GetMask("Tower")))
         {
-            switch (data.type)
-            {
-                case Define.UnitType.None:
-                case Define.UnitType.Recon:
-                case Define.UnitType.Slime:
-                case Define.UnitType.Butterfly:
-                case Define.UnitType.SlimeKing:
-                case Define.UnitType.SlimeKnight:
-                case Define.UnitType.SlimeSpeed:
-                case Define.UnitType.Bear:
-                case Define.UnitType.BearWalker:
+            if (ReferenceEquals(cloestTower.transform, hit.transform))
+                if (Vector3.Distance(transform.position, hit.point) < data.stats[0].range)
+                {
                     isAttacking = true;
                     StartCoroutine(Hit());
-                    break;
-            }
+                }
         }
     }
 
     private IEnumerator Hit()
     {
-        cloestTower.Damage(data.damage);
-        yield return new WaitForSeconds(attackDelay);
-        isAttacking = false;
-    }
+        cloestTower.Damage(data.stats[0].damage);
 
-    private IEnumerator Shoot()
-    {   
-        yield return new WaitForSeconds(shotDelay);
-
+        if (data.stats[0].range > 1.5f)
+        {
+            PrefabContainer
+                .Instantiate("EnemyBulletLine")
+                .GetComponent<BulletLine>()
+                .Init(transform.position, cloestTower.transform.position);
+        }
+        yield return new WaitForSeconds(data.stats[0].attackDelay);
         isAttacking = false;
     }
 
@@ -78,34 +74,19 @@ public class Enemy : EnemyBase
     {
         if (data.type == Define.UnitType.Butterfly)
         {
-            cloestTower = DetectTower(item => item is Castle);
+            cloestTower = DetectTower(
+                item => item is Tower,
+                item => item is Castle,
+                item => item is MainCastle);
         }
         else
         {
-            //cloestTower = DetectTower(item => item is Castle);
-            cloestTower = DetectTower(item => item is Vision);
+            cloestTower = DetectTower(
+                item => item is Vision,
+                item => item is Tower,
+                item => item is Castle,
+                item => item is MainCastle);
         }
-    }
-
-    private TowerBase DetectTower(System.Func<TowerBase, bool> criteria)
-    {
-        var detections =
-                TowerBase.towers
-                .OrderBy(item => Vector3.Distance(item.transform.position, transform.position))
-                .ToArray();
-
-        var c_detections =
-                detections
-                .Where(item => criteria.Invoke(item))
-                .ToArray();
-
-        Debug.Log(c_detections.Length);
-        Debug.Log(detections.Length);
-
-        if (c_detections.Length > 0) return c_detections[0];
-        if (detections.Length > 0) return detections[0];
-
-        return null;
     }
 
     public override void Damage(int damageCount)

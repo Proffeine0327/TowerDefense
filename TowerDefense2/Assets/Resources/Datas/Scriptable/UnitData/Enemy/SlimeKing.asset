@@ -19,3 +19,5 @@ MonoBehaviour:
   exp: 5
   damage: 5
   score: 150
+  attackDelay: 0.2
+  range: 3

@@ -742,28 +742,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84bfe3d827b1e7e46b73cc457adae3b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 50fdf81476a57ee42b765002ed041b52, type: 2}
-  type: 4
   range: 5
-  targetTag: Enemy
-  cost: 0
-  hp: 0
-  maxhp: 0
-  damage: 0
+  bulletLine: {fileID: 1759606607560820595, guid: 9a6ae76ade4ea9c4db78cc02e07d245c, type: 3}
+  data: {fileID: 11400000, guid: 50fdf81476a57ee42b765002ed041b52, type: 2}
   hpbar: {fileID: 829233613443135109}
-  exp: 0
-  level: 0
-  isGhost: 0
-  maxCount: 0
-  bullet: {fileID: 4959480650491751425, guid: def15c66489b5e742b3f00875f203184, type: 3}
   turnSpeed: 10
+  maxShotDelay: 0.3
   partToRotate: {fileID: 8877191970896181348}
   firePoint:
   - {fileID: 3191254760015847487}
   - {fileID: 7345909977384109695}
   - {fileID: 8101750279389967130}
-  curShotDelay: 0
-  maxShotDelay: 0.3
   LevelTower:
   - {fileID: 8643382683471040112}
   - {fileID: 8643382683990678608}
@@ -777,7 +766,7 @@ SphereCollider:
   m_GameObject: {fileID: 8877191970896181351}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0.68, z: 0}

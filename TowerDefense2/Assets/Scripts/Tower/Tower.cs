@@ -5,10 +5,8 @@ using UnityEngine;
 
 public class Tower : TowerBase
 {
-    [SerializeField] private int maxCount;
     [SerializeField] private float turnSpeed = 10f;
     [SerializeField] private float maxShotDelay;
-    [SerializeField] private GameObject bullet;
     [SerializeField] private Transform partToRotate;
     [SerializeField] private Transform[] firePoint;
     [SerializeField] private GameObject[] LevelTower;
@@ -31,6 +29,7 @@ public class Tower : TowerBase
     private void UpdateType()
     {
         if (isGhost) return;
+        if (cloestEnemies == null) return;
         if (cloestEnemies.Length == 0) return;
         if (cloestEnemies[0] == null) return;
         var dir = cloestEnemies[0].transform.position - transform.position;
@@ -83,6 +82,10 @@ public class Tower : TowerBase
     private void BasicAttack()
     {
         cloestEnemies[0].Damage(data.damage);
+        PrefabContainer
+            .Instantiate("TowerBulletLine")
+            .GetComponent<BulletLine>()
+            .Init(firePoint[level].position, cloestEnemies[0].transform.position);
     }
 
     private void MultipleAttack()
@@ -92,11 +95,10 @@ public class Tower : TowerBase
             if (!cloestEnemies[i]) continue;
 
             cloestEnemies[i].Damage(data.damage);
+            PrefabContainer
+                .Instantiate("TowerBulletLine")
+                .GetComponent<BulletLine>()
+                .Init(firePoint[level].position, cloestEnemies[i].transform.position);
         }
-    }
-
-    public override void Damage(int amount)
-    {
-        curhp -= amount;
     }
 }

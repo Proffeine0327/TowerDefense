@@ -4,28 +4,15 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class TowerBase : MonoBehaviour, ISelectable
+public class TowerBase : PlayerUnit
 {
-    public static HashSet<TowerBase> towers = new();
-
     [SerializeField] protected float range;
     [SerializeField] protected TowerData data;
     [SerializeField] protected Image hpbar;
-
-    protected int curhp;
+    
     protected int exp;
     protected int level;
     protected bool isGhost;
-
-    public void Select()
-    {
-        Debug.Log("Select!");
-    }
-
-    public void Unselect()
-    {
-        
-    }
 
     protected virtual void Awake()
     {
@@ -39,24 +26,13 @@ public abstract class TowerBase : MonoBehaviour, ISelectable
         }
 
         isGhost = true;
-        gameObject.GetComponent<SphereCollider>().enabled = false;
+        gameObject.GetComponent<Collider>().enabled = false;
     }
 
-    protected virtual void Start()
+    protected override void Update()
     {
-        towers.Add(this);
-    }
-
-    protected virtual void Update()
-    {
+        base.Update();
         hpbar.fillAmount = curhp / (float)data.maxhp;
-
-        if (curhp <= 0)
-        {
-            towers.Remove(this);
-            Destroy(gameObject);
-            return;
-        }
     }
 
     private void OnDrawGizmosSelected()
@@ -69,7 +45,7 @@ public abstract class TowerBase : MonoBehaviour, ISelectable
     {
         if (data.isDoubleGrid)
         {
-            if (!CheckGrid(Vector3.one, out _))
+            if (!CheckGrid(Vector3.one * 0.95f, out _))
             {
                 Destroy(gameObject);
                 return;
@@ -77,7 +53,7 @@ public abstract class TowerBase : MonoBehaviour, ISelectable
         }
         else
         {
-            if (!CheckGrid(Vector3.one, out _))
+            if (!CheckGrid(Vector3.one * 0.45f, out _))
             {
                 Destroy(gameObject);
                 return;
@@ -92,8 +68,9 @@ public abstract class TowerBase : MonoBehaviour, ISelectable
         
         Singleton.Get<GameManager>().Money -= data.cost;
         isGhost = false;
-        GetComponent<SphereCollider>().enabled = true;
+        GetComponent<Collider>().enabled = true;
         gameObject.layer = LayerMask.NameToLayer("Tower");
+        units.Add(this);
     }
 
     private bool CheckGrid(Vector3 boxSize, out RaycastHit hitInfo)
@@ -107,6 +84,4 @@ public abstract class TowerBase : MonoBehaviour, ISelectable
             Mathf.Infinity,
             LayerMask.GetMask("Grid", "Tower")) && hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Grid");
     }
-
-    public abstract void Damage(int damageCount);
 }

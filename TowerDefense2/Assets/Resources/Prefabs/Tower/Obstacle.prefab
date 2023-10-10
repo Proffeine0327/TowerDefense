@@ -130,18 +130,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdd518a925a43894f8d78f9647b82ba2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 175cf8e0cff113846ae9f0c948e77c87, type: 2}
-  type: 6
   range: 0
-  targetTag: 
-  cost: 0
-  hp: 0
-  maxhp: 0
-  damage: 0
+  bulletLine: {fileID: 1759606607560820595, guid: 9a6ae76ade4ea9c4db78cc02e07d245c, type: 3}
+  data: {fileID: 11400000, guid: 175cf8e0cff113846ae9f0c948e77c87, type: 2}
   hpbar: {fileID: 1757740908736019908}
-  exp: 0
-  level: 0
-  isGhost: 0
 --- !u!135 &6415824577883297674
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -151,7 +143,7 @@ SphereCollider:
   m_GameObject: {fileID: 7553900555972596301}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0.68, z: 0}

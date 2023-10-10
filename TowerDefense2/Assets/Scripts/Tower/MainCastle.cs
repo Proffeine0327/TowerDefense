@@ -8,23 +8,24 @@ public class MainCastle : TowerBase
 
     public bool IsDestroyed { get; private set; }
 
+    protected override void Awake()
+    {
+        base.Awake();
+        units.Add(this);
+    }
+
     protected override void Update()
     {
         hpbar.fillAmount = curhp / (float)data.maxhp;
-
+        
         if (curhp <= data.maxhp / 2)
         {
             damageEffect.SetActive(true);
         }
-        
         if (curhp <= 0)
         {
+            units.Remove(this);
             IsDestroyed = true;
         }
-    }
-
-    public override void Damage(int damageCount)
-    {
-        curhp -= damageCount;
     }
 }
