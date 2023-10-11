@@ -8,10 +8,12 @@ public class ItemMenuUI : DownMenuAttachUI
 {
     [SerializeField] private Button buyBtn;
     [SerializeField] private TextMeshProUGUI btnText;
+    [SerializeField] private TextMeshProUGUI remainText;
     [SerializeField] private RectTransform cardGroup;
     [SerializeField] private Vector2 closedPos;
 
     private int requireMoney = 50;
+    private int remainCount = 5;
     private List<ItemCard> close = new();
     private List<ItemCard> open = new();
 
@@ -39,8 +41,16 @@ public class ItemMenuUI : DownMenuAttachUI
         btnText.text = requireMoney.ToString();
         buyBtn.onClick.AddListener(() =>
         {
-            if (Singleton.Get<GameManager>().Money < requireMoney) return;
-            if (open.Count >= 3) return;
+            if (Singleton.Get<GameManager>().Money < requireMoney)
+            {
+                Singleton.Get<AnnounceUI>().DisplayText(AnnounceType.LackMoney);
+                return;
+            }
+            if (open.Count >= 3)
+            {
+                Singleton.Get<AnnounceUI>().DisplayText(AnnounceType.ItemFull);
+                return;
+            }
 
             var rand = Random.Range(0, close.Count);
             var card = close[rand];
@@ -48,8 +58,19 @@ public class ItemMenuUI : DownMenuAttachUI
             open.Add(card);
             ApplyChange();
             Singleton.Get<GameManager>().Money -= requireMoney;
+            remainCount--;
             requireMoney += 50;
             btnText.text = requireMoney.ToString();
+
+            switch (card.Type)
+            {
+                case Define.ItemType.TowerHeal: Singleton.Get<AnnounceUI>().DisplayText(AnnounceType.ItemGainTowerHeal); break;
+                case Define.ItemType.SlowEnemy: Singleton.Get<AnnounceUI>().DisplayText(AnnounceType.ItemGainSlowEnemy); break;
+                case Define.ItemType.GainAdditiveGold: Singleton.Get<AnnounceUI>().DisplayText(AnnounceType.ItemGainGainAdditiveGold); break;
+                case Define.ItemType.ReduceAttackDelay: Singleton.Get<AnnounceUI>().DisplayText(AnnounceType.ItemGainReduceAttackDelay); break;
+                case Define.ItemType.StopEnemyAttack: Singleton.Get<AnnounceUI>().DisplayText(AnnounceType.ItemGainStopEnemyAttack); break;
+                case Define.ItemType.SpawnRecon: Singleton.Get<AnnounceUI>().DisplayText(AnnounceType.ItemGainSpawnRecon); break;
+            }
         });
     }
 
@@ -69,5 +90,6 @@ public class ItemMenuUI : DownMenuAttachUI
         base.Update();
         foreach(var c in open) c.CoolTimeImage.fillAmount = CurDelay / 5;
         if(CurDelay > 0) CurDelay -= Time.deltaTime;
+        remainText.text = $"Remain : {remainCount}";
     }
 }

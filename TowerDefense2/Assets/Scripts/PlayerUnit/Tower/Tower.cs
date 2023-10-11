@@ -15,9 +15,9 @@ public class Tower : TowerBase, IUpgradeable
     private float curShotDelay;
 
     public override string ExplainContent => 
-        $"Max Hp : {data.levelStats[level].maxhp}\n" +
-        $"Hp : {curhp}\n" +
-        $"DPS : {1 / data.levelStats[level].attackDelay * data.levelStats[level].damage:#.##}\n\n" +
+        $"Max Hp. {data.levelStats[level].maxhp}\n" +
+        $"Hp. {curhp}\n" +
+        $"DPS. {1 / data.levelStats[level].attackDelay * data.levelStats[level].damage:#.##}\n\n" +
         data.explain;
     public int RequireCost => data.levelStats[level].nextRequireCost;
 

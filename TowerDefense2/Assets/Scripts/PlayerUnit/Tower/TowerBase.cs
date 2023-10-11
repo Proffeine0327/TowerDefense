@@ -83,6 +83,7 @@ public class TowerBase : MonoBehaviour, ISelectable
             {
                 if (!CheckGrid(offset))
                 {
+                    Singleton.Get<AnnounceUI>().DisplayText(AnnounceType.TowerCannotSet);
                     Destroy(gameObject);
                     return;
                 }
@@ -92,6 +93,7 @@ public class TowerBase : MonoBehaviour, ISelectable
         {
             if (!CheckGrid(Vector3.zero))
             {
+                Singleton.Get<AnnounceUI>().DisplayText(AnnounceType.TowerCannotSet);
                 Destroy(gameObject);
                 return;
             }
@@ -99,6 +101,7 @@ public class TowerBase : MonoBehaviour, ISelectable
 
         if (Singleton.Get<GameManager>().Money < data.cost)
         {
+            Singleton.Get<AnnounceUI>().DisplayText(AnnounceType.LackMoney);
             Destroy(gameObject);
             return;
         }

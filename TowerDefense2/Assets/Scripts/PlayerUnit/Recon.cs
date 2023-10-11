@@ -14,28 +14,15 @@ public class Recon : MonoBehaviour, ISelectable, IUpgradeable
     private NavMeshAgent agent;
 
     public virtual string ExplainContent =>
-    $"DPS : {1 / stats[level].attackDelay * stats[level].damage:0.##}\n" +
-    $"Speed : {stats[level].speed}\n" +
-    $"Level : {level + 1}\n\n" +
+    $"DPS. {1 / stats[level].attackDelay * stats[level].damage:0.##}\n" +
+    $"Speed. {stats[level].speed}\n" +
+    $"Level. {level + 1}\n\n" +
     explain;
 
     public int RequireCost => stats[level].nextRequireCost;
 
     private void Start()
     {
-        // var rand50p = Random.Range(0, 2) == 0;
-
-        // if(rand50p)
-        // {
-        //     var randangle = Random.Range(0, 360);
-        //     var vector = new Vector3(Mathf.Cos(randangle * Mathf.Deg2Rad), 0, Mathf.Sin(randangle * Mathf.Deg2Rad))
-        //     Singleton.Get<GameManager>().MainCastle
-        // }
-        // else
-        // {
-
-        // }
-
         agent = GetComponent<NavMeshAgent>();
         StartCoroutine(MoveRoutine());
     }

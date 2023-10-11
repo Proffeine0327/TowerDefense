@@ -8,6 +8,12 @@ public class SelectManager : MonoBehaviour
 
     public ISelectable SelectedObject { get; private set; }
 
+    public void Select(ISelectable obj)
+    {
+        SelectedObject = obj;
+        SelectedObject.Select();
+    }
+
     public void Unselect()
     {
         if(SelectedObject != null) SelectedObject.Unselect();
@@ -29,6 +35,7 @@ public class SelectManager : MonoBehaviour
                 if(SelectedObject != null) SelectedObject.Unselect();
                 comp.Select();
                 SelectedObject = comp;
+                Singleton.Get<InGameCameraManager>().CameraState = CameraState.focus;
                 Singleton.Get<DownMenuUI>().State = DownMenuState.inspect;
             }
         }

@@ -15,6 +15,7 @@ public class ItemCard : MonoBehaviour
 
     private RectTransform rt => transform as RectTransform;
     public Image CoolTimeImage => coolTime;
+    public Define.ItemType Type => type;
 
     public void Set(int index, Vector3 pos)
     {
@@ -29,9 +30,19 @@ public class ItemCard : MonoBehaviour
         btn = GetComponent<Button>();
         btn.onClick.AddListener(() =>
         {
-            if(itemMenuUI.CurDelay > 0) return;
+            if (itemMenuUI.CurDelay > 0) return;
             Singleton.Get<GameManager>().ItemEffect(type);
             itemMenuUI.UseCard(index);
+
+            switch (type)
+            {
+                case Define.ItemType.TowerHeal: Singleton.Get<AnnounceUI>().DisplayText(AnnounceType.ItemUseTowerHeal); break;
+                case Define.ItemType.SlowEnemy: Singleton.Get<AnnounceUI>().DisplayText(AnnounceType.ItemUseSlowEnemy); break;
+                case Define.ItemType.GainAdditiveGold: Singleton.Get<AnnounceUI>().DisplayText(AnnounceType.ItemUseGainAdditiveGold); break;
+                case Define.ItemType.ReduceAttackDelay: Singleton.Get<AnnounceUI>().DisplayText(AnnounceType.ItemUseReduceAttackDelay); break;
+                case Define.ItemType.StopEnemyAttack: Singleton.Get<AnnounceUI>().DisplayText(AnnounceType.ItemUseStopEnemyAttack); break;
+                case Define.ItemType.SpawnRecon: Singleton.Get<AnnounceUI>().DisplayText(AnnounceType.ItemUseSpawnRecon); break;
+            }
         });
     }
 

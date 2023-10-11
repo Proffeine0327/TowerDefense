@@ -3,17 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+public enum CameraState { normal, focus, free }
+
 public class InGameCameraManager : MonoBehaviour
 {
     [SerializeField] private float lerpSpeed;
-    [SerializeField] private float zoomSize;
     [SerializeField] private float normalDist;
     [SerializeField] private float zoomDist;
+    [SerializeField] private float thickness;
+    [SerializeField] private float rotateSpeed;
+    [SerializeField] private Camera minimapCam;
     [SerializeField] private Transform camPivot;
     [SerializeField] private Transform normalPivot;
 
-    private bool isDragging;
     private float curDist;
+    private Vector3 storePosition;
 
     public Camera mainCamera => Camera.main;
     public bool IsUIClick
@@ -34,32 +38,89 @@ public class InGameCameraManager : MonoBehaviour
         }
     }
     public Ray CurrentMousePosRay => mainCamera.ScreenPointToRay(Input.mousePosition);
+    public CameraState CameraState { get; set; }
+
+    public void MinimapClick(Vector3 ratio)
+    {
+        var worldPos = minimapCam.ViewportToWorldPoint(ratio);
+        worldPos.y = normalPivot.position.y;
+
+        camPivot.position = worldPos;
+        CameraState = CameraState.free;
+        Singleton.Get<SelectManager>().Unselect();
+        Singleton.Get<DownMenuUI>().State = DownMenuState.none;
+    }
 
     private void Awake()
     {
         Singleton.Register(this);
 
         curDist = normalDist;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !IsUIClick) isDragging = true;
-        if (isDragging) camPivot.Rotate(new Vector3(0, Input.GetAxis("Mouse X"), 0), Space.World);
-        if (Input.GetMouseButtonUp(0)) isDragging = false;
+        if (Input.mousePosition.x <= thickness || Input.GetKey(KeyCode.A))
+            camPivot.Rotate(new Vector3(0, rotateSpeed * Time.deltaTime, 0), Space.World);
+        if (Input.mousePosition.x >= Screen.width - thickness || Input.GetKey(KeyCode.D))
+            camPivot.Rotate(new Vector3(0, -rotateSpeed * Time.deltaTime, 0), Space.World);
 
-        var curSelect = Singleton.Get<SelectManager>().SelectedObject;
+        switch (CameraState)
+        {
+            case CameraState.normal:
+                camPivot.position = Vector3.Lerp(camPivot.position, normalPivot.position, Time.unscaledDeltaTime * lerpSpeed);
+                curDist = Mathf.Lerp(curDist, normalDist, Time.unscaledDeltaTime * lerpSpeed);
+                break;
+            case CameraState.focus:
+                var curSelect = Singleton.Get<SelectManager>().SelectedObject;
+                if(ReferenceEquals(curSelect, null))
+                {
+                    CameraState = CameraState.normal;
+                    break;
+                }
 
-        if (curSelect != null)
-        {
-            camPivot.position = Vector3.Lerp(camPivot.position, curSelect.transform.position, Time.unscaledDeltaTime * lerpSpeed);
-            curDist = Mathf.Lerp(curDist, zoomDist, Time.unscaledDeltaTime * lerpSpeed);
-        }
-        else
-        {
-            camPivot.position = Vector3.Lerp(camPivot.position, normalPivot.position, Time.unscaledDeltaTime * lerpSpeed);
-            curDist = Mathf.Lerp(curDist, normalDist, Time.unscaledDeltaTime * lerpSpeed);
+                camPivot.position = Vector3.Lerp(camPivot.position, curSelect.transform.position, Time.unscaledDeltaTime * lerpSpeed);
+                curDist = Mathf.Lerp(curDist, zoomDist, Time.unscaledDeltaTime * lerpSpeed);
+                break;
+            case CameraState.free:
+                curDist = Mathf.Lerp(curDist, normalDist, Time.unscaledDeltaTime * lerpSpeed);
+                break;
         }
         mainCamera.transform.position = camPivot.position + -mainCamera.transform.forward * curDist;
+
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            Singleton.Get<SelectManager>().Select(Singleton.Get<GameManager>().MainCastle.GetComponent<ISelectable>());
+            CameraState = CameraState.focus;
+        }
+        if(Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            Singleton.Get<SelectManager>().Select(Singleton.Get<GameManager>().MainCastle.GetComponent<ISelectable>());
+            CameraState = CameraState.focus;
+        }
+        if(Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            Singleton.Get<SelectManager>().Select(Singleton.Get<GameManager>().MainCastle.GetComponent<ISelectable>());
+            CameraState = CameraState.focus;
+        }
+        if(Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            if(storePosition == Vector3.zero)
+            {
+                Singleton.Get<SelectManager>().Select(Singleton.Get<GameManager>().MainCastle.GetComponent<ISelectable>());
+                CameraState = CameraState.focus;
+            }
+            else
+            {
+                camPivot.position = storePosition;
+                CameraState = CameraState.free;
+            }
+        }
+        if(Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            storePosition = camPivot.position;
+        }
+
     }
 }

@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private GameObject mainCastle;
     [SerializeField] private GameObject[] subCastles;
+    [SerializeField] private DisappearRecon reconPrefeb;
 
     public bool ExistSubCastles
     {
@@ -57,6 +58,7 @@ public class GameManager : MonoBehaviour
             case Define.ItemType.ReduceAttackDelay: ReduceAttackDelayTime = 10; break;
             case Define.ItemType.StopEnemyAttack: StopEnemyAttackTime = 10; break;
             case Define.ItemType.SpawnRecon:
+                Instantiate(reconPrefeb).Init();
                 break;
         }
     }

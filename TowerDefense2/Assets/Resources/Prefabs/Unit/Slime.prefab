@@ -165,7 +165,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 656814422490115232}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 041123ba93b69314bac63ffcc9928f79, type: 3}
+  m_Script: {fileID: 11500000, guid: b35576ca603aa1f478c4ef0195598c3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 258b0002da9ef514893757824767b1d1, type: 2}
@@ -326,6 +326,10 @@ PrefabInstance:
     - target: {fileID: 7444199794856509890, guid: 97ea1c853fa8b9e459c0516677563bf9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7444199794856509892, guid: 97ea1c853fa8b9e459c0516677563bf9, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7444199794856509894, guid: 97ea1c853fa8b9e459c0516677563bf9, type: 3}
       propertyPath: m_Name

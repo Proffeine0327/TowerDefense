@@ -51,5 +51,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "TowerDefense2.sln"
+    "dotnet.defaultSolution": "TowerDefense2.sln",
+    "files.autoGuessEncoding": true
 }
