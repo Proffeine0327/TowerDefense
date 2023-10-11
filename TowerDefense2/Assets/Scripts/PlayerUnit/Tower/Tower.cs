@@ -72,9 +72,8 @@ public class Tower : TowerBase
 
     private EnemyBase[] DetectEnemies()
     {
-        return Physics.OverlapSphere(transform.position, range)
-                .Where(item => item.CompareTag(data.targetTag))
-                .Select(item => item.GetComponent<EnemyBase>())
+        return EnemyBase.enemies
+                .Where(item => Vector3.Distance(transform.position, item.transform.position) < data.range)
                 .OrderBy(item => Vector3.Distance(item.transform.position, transform.position))
                 .ToArray();
     }

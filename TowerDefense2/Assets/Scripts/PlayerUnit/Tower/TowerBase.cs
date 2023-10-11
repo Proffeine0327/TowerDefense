@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class TowerBase : PlayerUnit
@@ -9,7 +10,7 @@ public class TowerBase : PlayerUnit
     [SerializeField] protected float range;
     [SerializeField] protected TowerData data;
     [SerializeField] protected Image hpbar;
-    
+
     protected int exp;
     protected int level;
     protected bool isGhost;
@@ -45,15 +46,26 @@ public class TowerBase : PlayerUnit
     {
         if (data.isDoubleGrid)
         {
-            if (!CheckGrid(Vector3.one * 0.95f, out _))
+            var offsets = new Vector3[]
             {
-                Destroy(gameObject);
-                return;
+                new Vector3(0.5f, 0, 0.5f),
+                new Vector3(0.5f, 0, -0.5f),
+                new Vector3(-0.5f, 0, 0.5f),
+                new Vector3(-0.5f, 0, -0.5f),
+            };
+
+            foreach (var offset in offsets)
+            {
+                if (!CheckGrid(offset))
+                {
+                    Destroy(gameObject);
+                    return;
+                }
             }
         }
         else
         {
-            if (!CheckGrid(Vector3.one * 0.45f, out _))
+            if (!CheckGrid(Vector3.zero))
             {
                 Destroy(gameObject);
                 return;
@@ -65,21 +77,22 @@ public class TowerBase : PlayerUnit
             Destroy(gameObject);
             return;
         }
-        
+
         Singleton.Get<GameManager>().Money -= data.cost;
         isGhost = false;
         GetComponent<Collider>().enabled = true;
+        GetComponent<NavMeshObstacle>().enabled = true;
         gameObject.layer = LayerMask.NameToLayer("Tower");
         units.Add(this);
     }
 
-    private bool CheckGrid(Vector3 boxSize, out RaycastHit hitInfo)
+    private bool CheckGrid(Vector3 offset)
     {
         return Physics.BoxCast(
-            transform.position + Vector3.up * 5,
-            boxSize,
+            transform.position + Vector3.up * 5 + offset,
+            Vector3.one * 0.45f,
             Vector3.down,
-            out hitInfo,
+            out var hitInfo,
             Quaternion.identity,
             Mathf.Infinity,
             LayerMask.GetMask("Grid", "Tower")) && hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Grid");

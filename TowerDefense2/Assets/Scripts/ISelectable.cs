@@ -8,4 +8,6 @@ public interface ISelectable
     public abstract Transform transform { get; }
     public abstract void Select();
     public abstract void Unselect();
+
+    public virtual string ExplainContent => "";
 }

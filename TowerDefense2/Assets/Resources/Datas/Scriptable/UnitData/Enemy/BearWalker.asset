@@ -13,10 +13,9 @@ MonoBehaviour:
   m_Name: BearWalker
   m_EditorClassIdentifier: 
   type: 8
-  hp: 300
-  maxhp: 300
   gold: 100
-  exp: 5
-  damage: 10
   score: 2000
-  attackDelay: 0.2
+  maxhp: 50
+  damage: 3
+  attackDelay: 0.33
+  range: 3

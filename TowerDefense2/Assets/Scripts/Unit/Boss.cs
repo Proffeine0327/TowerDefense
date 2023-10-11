@@ -53,7 +53,7 @@ public class Boss : EnemyBase
     {
         isAttacking = true;
         if (curAttackDelay < maxAttackDelay) return;
-        cloestTower.Damage(data.stats[0].damage);
+        cloestTower.Damage(data.damage);
         curAttackDelay = 0f;
         isAttacking = false;
     }

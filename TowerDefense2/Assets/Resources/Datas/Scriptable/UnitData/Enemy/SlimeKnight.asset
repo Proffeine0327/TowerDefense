@@ -13,11 +13,9 @@ MonoBehaviour:
   m_Name: SlimeKnight
   m_EditorClassIdentifier: 
   type: 5
-  hp: 20
-  maxhp: 20
   gold: 2
-  exp: 5
-  damage: 5
   score: 200
-  attackDelay: 0.2
+  maxhp: 50
+  damage: 3
+  attackDelay: 0.33
   range: 3

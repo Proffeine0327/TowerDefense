@@ -10,6 +10,7 @@ public class PlayerUnit : MonoBehaviour, ISelectable
 
     public virtual void Select() { }
     public virtual void Unselect() { }
+    public virtual string ExplainContent => "";
 
     protected virtual void Update()
     {

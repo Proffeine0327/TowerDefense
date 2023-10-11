@@ -13,11 +13,9 @@ MonoBehaviour:
   m_Name: Butterfly
   m_EditorClassIdentifier: 
   type: 3
-  hp: 10
-  maxhp: 10
   gold: 8
-  exp: 5
-  damage: 5
   score: 50
-  attackDelay: 0.2
+  maxhp: 50
+  damage: 3
+  attackDelay: 0.33
   range: 3

@@ -13,11 +13,9 @@ MonoBehaviour:
   m_Name: SlimeSpeed
   m_EditorClassIdentifier: 
   type: 6
-  hp: 20
-  maxhp: 20
   gold: 5
-  exp: 5
-  damage: 5
   score: 100
-  attackDelay: 0.2
+  maxhp: 50
+  damage: 3
+  attackDelay: 0.33
   range: 3

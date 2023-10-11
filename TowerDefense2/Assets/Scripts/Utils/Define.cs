@@ -14,7 +14,6 @@ public class Define
     public enum UnitType
     {
         None,
-        Recon, //СЄТћ РЏДж
         Slime,
         Butterfly,
         SlimeKing,
