@@ -14,10 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefeb: {fileID: 7236607310324438755, guid: c177c72e77cdaa84984845c653781fbd, type: 3}
   type: 7
-  range: 0
-  targetTag: 
-  hp: 30
-  maxhp: 30
-  damage: 0
   cost: 100
   isDoubleGrid: 1
+  explain: "\uC801\uC744 \uB3C4\uBC1C\uD558\uC5EC \uC790\uC2E0\uC744 \uD0C0\uAC9F\uC73C\uB85C
+    \uC9C0\uC815\uD558\uAC8C \uD569\uB2C8\uB2E4.\n\uC801\uC758 \uACF5\uACA9\uC5D0
+    \uC601\uD5A5\uC744 \uBC1B\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.\n30\uCD08 \uB4A4\uC5D0
+    \uC0AC\uB77C\uC9D1\uB2C8\uB2E4."
+  levelStats:
+  - maxhp: 30
+    damage: 5
+    nextRequireCost: -1
+    attackDelay: 0.33
+    range: 3
+    speed: 0

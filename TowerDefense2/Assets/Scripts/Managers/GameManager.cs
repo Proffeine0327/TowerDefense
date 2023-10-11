@@ -6,11 +6,11 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [Header("Variable")]
-    [SerializeField] private int endStageIndex;
+    [SerializeField] private int stage;
     [SerializeField] private int startMoney;
+    [SerializeField] private int waveAmount;
     [SerializeField] private int spawnAmount;
     [Header("Reference")]
-    [Header("slim, but, kingslim, knightslim, speedslim")]
     [SerializeField] private GameObject[] enemies;
     [SerializeField] private GameObject boss;
     [SerializeField] private Transform[] spawnPoints;
@@ -31,8 +31,35 @@ public class GameManager : MonoBehaviour
         }
     }
     public int Money { get; set; }
+    public int Wave { get; private set; }
     public GameObject MainCastle => mainCastle;
     public GameObject[] SubCastles => subCastles;
+    public int MaxWave => waveAmount;
+    public float WaveProgress { get; private set; }
+    public int Stage => stage;
+
+    //effect
+    public float EnemySlowTime { get; private set; }
+    public float GainAdditiveGoldTime { get; private set; }
+    public float ReduceAttackDelayTime { get; private set; }
+    public float StopEnemyAttackTime { get; private set; }
+
+    public void ItemEffect(Define.ItemType type)
+    {
+        switch (type)
+        {
+            case Define.ItemType.TowerHeal:
+                foreach(var tower in TowerBase.towers)
+                    tower.HealEffect();
+                break;
+            case Define.ItemType.SlowEnemy: EnemySlowTime = 10; break;
+            case Define.ItemType.GainAdditiveGold: GainAdditiveGoldTime = 60; break;
+            case Define.ItemType.ReduceAttackDelay: ReduceAttackDelayTime = 10; break;
+            case Define.ItemType.StopEnemyAttack: StopEnemyAttackTime = 10; break;
+            case Define.ItemType.SpawnRecon:
+                break;
+        }
+    }
 
     private void Awake()
     {
@@ -48,22 +75,26 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        //gameover
-        if (!mainCastle) return;
+        if(EnemySlowTime > 0) EnemySlowTime -= Time.deltaTime;
+        if(GainAdditiveGoldTime > 0) GainAdditiveGoldTime -= Time.deltaTime;
+        if(ReduceAttackDelayTime > 0) ReduceAttackDelayTime -= Time.deltaTime;
+        if(StopEnemyAttackTime > 0) StopEnemyAttackTime -= Time.deltaTime;
     }
 
     private IEnumerator GameRoutine()
     {
-        var spawnCount = spawnAmount;
-        while (spawnCount > 0)
+        for (Wave = 0; Wave < waveAmount; Wave++)
         {
-            Instantiate(
-                enemies[Random.Range(0, enemies.Length)],
-                spawnPoints[Random.Range(0, spawnPoints.Length)].position,
-                Quaternion.identity);
-            
-            spawnCount--;
-            yield return new WaitForSeconds(Random.Range(0.3f, 3.5f));
+            for (int spawn = 0; spawn < spawnAmount; spawn++)
+            {
+                WaveProgress = (spawn + 1) / (float)spawnAmount;
+                Instantiate(
+                    enemies[Random.Range(0, enemies.Length)],
+                    spawnPoints[Random.Range(0, spawnPoints.Length)].position,
+                    Quaternion.identity);
+
+                yield return new WaitForSeconds(Random.Range(0.3f, 3.5f));
+            }
         }
         GameObject boss = Instantiate(this.boss, spawnPoints[Random.Range(0, spawnPoints.Length)].position, Quaternion.identity);
 

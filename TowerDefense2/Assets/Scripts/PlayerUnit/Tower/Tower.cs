@@ -3,16 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Tower : TowerBase
+public class Tower : TowerBase, IUpgradeable
 {
     [SerializeField] private float turnSpeed = 10f;
     [SerializeField] private float maxShotDelay;
     [SerializeField] private Transform partToRotate;
     [SerializeField] private Transform[] firePoint;
-    [SerializeField] private GameObject[] LevelTower;
+    [SerializeField] private GameObject[] levelTower;
 
-    private EnemyBase[] cloestEnemies;
+    private Enemy[] cloestEnemies;
     private float curShotDelay;
+
+    public override string ExplainContent => 
+        $"Max Hp : {data.levelStats[level].maxhp}\n" +
+        $"Hp : {curhp}\n" +
+        $"DPS : {1 / data.levelStats[level].attackDelay * data.levelStats[level].damage:#.##}\n\n" +
+        data.explain;
+    public int RequireCost => data.levelStats[level].nextRequireCost;
 
     protected override void Awake()
     {
@@ -23,6 +30,7 @@ public class Tower : TowerBase
     protected override void Update()
     {
         base.Update();
+        for(int i = 0; i < levelTower.Length; i++) levelTower[i].SetActive(i == level);
         UpdateType();
     }
 
@@ -56,7 +64,7 @@ public class Tower : TowerBase
                         MultipleAttack();
                         break;
                 }
-                curShotDelay = maxShotDelay;
+                curShotDelay = maxShotDelay * (Singleton.Get<GameManager>().ReduceAttackDelayTime > 0 ? 0.5f : 1);
             }
         }
     }
@@ -70,17 +78,17 @@ public class Tower : TowerBase
         }
     }
 
-    private EnemyBase[] DetectEnemies()
+    private Enemy[] DetectEnemies()
     {
-        return EnemyBase.enemies
-                .Where(item => Vector3.Distance(transform.position, item.transform.position) < data.range)
+        return Enemy.enemies
+                .Where(item => Vector3.Distance(transform.position, item.transform.position) < data.levelStats[level].range)
                 .OrderBy(item => Vector3.Distance(item.transform.position, transform.position))
                 .ToArray();
     }
 
     private void BasicAttack()
     {
-        cloestEnemies[0].Damage(data.damage);
+        cloestEnemies[0].Damage(data.levelStats[level].damage);
         PrefabContainer
             .Instantiate("TowerBulletLine")
             .GetComponent<BulletLine>()
@@ -93,11 +101,17 @@ public class Tower : TowerBase
         {
             if (!cloestEnemies[i]) continue;
 
-            cloestEnemies[i].Damage(data.damage);
+            cloestEnemies[i].Damage(data.levelStats[level].damage);
             PrefabContainer
                 .Instantiate("TowerBulletLine")
                 .GetComponent<BulletLine>()
                 .Init(firePoint[level].position, cloestEnemies[i].transform.position);
         }
+    }
+
+    public void Upgrade()
+    {
+        if(data.levelStats[level].nextRequireCost != -1)
+            level++;
     }
 }

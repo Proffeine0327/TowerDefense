@@ -11,20 +11,20 @@ public class MainCastle : TowerBase
     protected override void Awake()
     {
         base.Awake();
-        units.Add(this);
+        towers.Add(this);
     }
 
     protected override void Update()
     {
-        hpbar.fillAmount = curhp / (float)data.maxhp;
+        hpbar.fillAmount = curhp / (float)data.levelStats[0].maxhp;
         
-        if (curhp <= data.maxhp / 2)
+        if (curhp <= data.levelStats[0].maxhp / 2)
         {
             damageEffect.SetActive(true);
         }
         if (curhp <= 0)
         {
-            units.Remove(this);
+            towers.Remove(this);
             IsDestroyed = true;
         }
     }

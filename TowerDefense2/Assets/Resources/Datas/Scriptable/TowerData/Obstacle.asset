@@ -14,10 +14,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefeb: {fileID: 7553900555972596301, guid: 58526678209c62f4a8d01e19b3282fae, type: 3}
   type: 6
-  range: 0
-  targetTag: 
-  hp: 200
-  maxhp: 200
-  damage: 0
   cost: 80
   isDoubleGrid: 1
+  explain: "\uC801\uC744 \uACF5\uACA9\uD558\uB294 \uD0C0\uC6CC\uC785\uB2C8\uB2E4."
+  levelStats:
+  - maxhp: 100
+    damage: 5
+    nextRequireCost: 150
+    attackDelay: 0.33
+    range: 3
+    speed: 0
+  - maxhp: 150
+    damage: 7
+    nextRequireCost: 200
+    attackDelay: 0.33
+    range: 3
+    speed: 0
+  - maxhp: 200
+    damage: 10
+    nextRequireCost: -1
+    attackDelay: 0.33
+    range: 4
+    speed: 0

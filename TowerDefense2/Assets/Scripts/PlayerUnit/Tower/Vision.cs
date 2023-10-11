@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Vision : TowerBase
 {
+    public override string ExplainContent =>
+        $"Remain. {0:0}:{curhp:00}\n\n" + data.explain;
+
     protected override void Awake()
     {
         base.Awake();

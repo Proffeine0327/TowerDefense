@@ -7,9 +7,9 @@ public class TowerData : ScriptableObject
 {
     public GameObject prefeb;
     public Define.BuildType type;
-    public int maxhp;
-    public int damage;
     public int cost;
-    public float range;
     public bool isDoubleGrid;
+    [TextArea(3, 6)] 
+    public string explain;
+    public LevelStat[] levelStats;
 }

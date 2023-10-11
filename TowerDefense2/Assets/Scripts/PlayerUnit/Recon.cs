@@ -4,17 +4,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Recon : PlayerUnit
+public class Recon : MonoBehaviour, ISelectable, IUpgradeable
 {
-    [SerializeField] private int damage;
-    [SerializeField] private float range;
-    [SerializeField] private float attackDelay;
-    [TextArea(3, 7)] [SerializeField] private string explain;
+    [SerializeField] private LevelStat[] stats;
+    [TextArea(3, 7)][SerializeField] private string explain;
 
+    private int level;
     private float curAttackDelay;
     private NavMeshAgent agent;
 
-    public override string ExplainContent => explain;
+    public virtual string ExplainContent =>
+    $"DPS : {1 / stats[level].attackDelay * stats[level].damage:0.##}\n" +
+    $"Speed : {stats[level].speed}\n" +
+    $"Level : {level + 1}\n\n" +
+    explain;
+
+    public int RequireCost => stats[level].nextRequireCost;
 
     private void Start()
     {
@@ -35,11 +40,11 @@ public class Recon : PlayerUnit
         StartCoroutine(MoveRoutine());
     }
 
-    protected override void Update()
+    protected virtual void Update()
     {
         var detection =
-            EnemyBase.enemies
-            .Where(item => Vector3.Distance(transform.position, item.transform.position) <= range)
+            Enemy.enemies
+            .Where(item => Vector3.Distance(transform.position, item.transform.position) <= stats[level].range)
             .OrderBy(item => Vector3.Distance(transform.position, item.transform.position))
             .ToArray();
 
@@ -53,14 +58,16 @@ public class Recon : PlayerUnit
         {
             if (detection.Length > 0)
             {
-                detection[0].Damage(damage);
-                curAttackDelay = attackDelay;
+                detection[0].Damage(stats[level].damage);
+                curAttackDelay = stats[level].attackDelay;
                 PrefabContainer
                     .Instantiate("TowerBulletLine")
                     .GetComponent<BulletLine>()
                     .Init(transform.position, detection[0].transform.position);
             }
         }
+
+        agent.speed = stats[level].speed;
     }
 
     private IEnumerator MoveRoutine()
@@ -78,5 +85,21 @@ public class Recon : PlayerUnit
 
             yield return new WaitForSeconds(2);
         }
+    }
+
+    public void Upgrade()
+    {
+        if (stats[level].nextRequireCost != -1)
+            level++;
+    }
+
+    public void Select()
+    {
+        
+    }
+
+    public void Unselect()
+    {
+        
     }
 }

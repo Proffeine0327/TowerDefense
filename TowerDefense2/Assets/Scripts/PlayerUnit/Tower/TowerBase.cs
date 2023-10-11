@@ -5,21 +5,41 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class TowerBase : PlayerUnit
+public class TowerBase : MonoBehaviour, ISelectable
 {
+    public readonly static HashSet<TowerBase> towers = new();
+
     [SerializeField] protected float range;
     [SerializeField] protected TowerData data;
     [SerializeField] protected Image hpbar;
 
+    public virtual string ExplainContent => 
+        $"Max Hp. {data.levelStats[level].maxhp}\n" +
+        $"Hp. {curhp}\n\n" +
+        data.explain;
+
     protected int exp;
     protected int level;
+    protected float curhp;
     protected bool isGhost;
+
+    public virtual void Select() { }
+    public virtual void Unselect() { }
+
+    public void HealEffect()
+    {
+        curhp += data.levelStats[level].maxhp * 0.3f;
+    }
+
+    public virtual void Damage(int amount)
+    {
+        curhp -= amount;
+        PrefabContainer.Instantiate("HitEffect", transform.position, Quaternion.identity);
+    }
 
     protected virtual void Awake()
     {
-        exp = 0;
-        level = 0;
-        curhp = data.maxhp;
+        curhp = data.levelStats[level].maxhp;
 
         if (data.type == Define.BuildType.MainCastle || data.type == Define.BuildType.SubCastle)
         {
@@ -30,10 +50,15 @@ public class TowerBase : PlayerUnit
         gameObject.GetComponent<Collider>().enabled = false;
     }
 
-    protected override void Update()
+    protected virtual void Update()
     {
-        base.Update();
-        hpbar.fillAmount = curhp / (float)data.maxhp;
+        if (curhp <= 0)
+        {
+            towers.Remove(this);
+            Destroy(gameObject);
+            return;
+        }
+        hpbar.fillAmount = curhp / data.levelStats[level].maxhp;
     }
 
     private void OnDrawGizmosSelected()
@@ -83,7 +108,7 @@ public class TowerBase : PlayerUnit
         GetComponent<Collider>().enabled = true;
         GetComponent<NavMeshObstacle>().enabled = true;
         gameObject.layer = LayerMask.NameToLayer("Tower");
-        units.Add(this);
+        towers.Add(this);
     }
 
     private bool CheckGrid(Vector3 offset)

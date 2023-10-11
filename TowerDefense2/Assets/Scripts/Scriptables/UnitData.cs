@@ -12,4 +12,5 @@ public class UnitData : ScriptableObject
     public int damage;
     public float attackDelay;
     public float range;
+    public float speed;
 }

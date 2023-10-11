@@ -1,3 +1,4 @@
+//*
 Shader"Custom/BloomShader"
 {
     Properties
@@ -37,13 +38,15 @@ v2f vert(appdata_t v)
     return o;
 }
 
+
 half4 frag(v2f i) : SV_Target
 {
     half4 col = tex2D(_MainTex, i.uv);
     col.rgb *= _Intensity;
     return col;
-}
-            ENDCG
+}            ENDCG
         }
     }
 }
+//*/
+

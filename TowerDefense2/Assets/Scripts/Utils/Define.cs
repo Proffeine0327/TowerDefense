@@ -34,4 +34,14 @@ public class Define
         Obstacle,
         Vision,
     }
+
+    public enum ItemType
+    {
+        TowerHeal,
+        SlowEnemy,
+        GainAdditiveGold,
+        ReduceAttackDelay,
+        StopEnemyAttack,
+        SpawnRecon
+    }
 }

@@ -165,14 +165,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 656814422490115232}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b35576ca603aa1f478c4ef0195598c3e, type: 3}
+  m_Script: {fileID: 11500000, guid: 041123ba93b69314bac63ffcc9928f79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 258b0002da9ef514893757824767b1d1, type: 2}
   hpbar: {fileID: 7949527863226288959}
-  bulletLine: {fileID: 7596047131354063627, guid: 6d6818ddd2ea5e945b22d8ffa448e88c, type: 3}
-  bullet: {fileID: 4959480650491751425, guid: 51787e5726cd0574db2d8fbdc0a9a747, type: 3}
-  firePoint: {fileID: 893298066421542108}
 --- !u!195 &656814422490115263
 NavMeshAgent:
   m_ObjectHideFlags: 0
