@@ -21,7 +21,8 @@ public class MinimapUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
     {
         if(!isClick) return;
 
-        Singleton.Get<InGameCameraManager>().MinimapClick((eventData.position - (Vector2)transform.position) / rt.rect.width);
+        if(RectTransformUtility.RectangleContainsScreenPoint(rt, eventData.position))
+            Singleton.Get<InGameCameraManager>().MinimapClick((eventData.position - (Vector2)transform.position) / rt.rect.width);
     }
 
     public void OnPointerUp(PointerEventData eventData)

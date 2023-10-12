@@ -7,8 +7,12 @@ public class LoadingScene : MonoBehaviour
 {
     private static LoadingScene instance;
 
+    [SerializeField] private LoadingSceneController prefab;
     [SerializeField] private float fadeTime;
-    [SerializeField] private string loadingSceneName;
+
+    private LoadingSceneController controller;
+
+    public static bool IsPlayLoading { get; private set; }
     public static bool EndLoading { get; set; }
     public static float FadeTime => instance.fadeTime;
 
@@ -19,19 +23,20 @@ public class LoadingScene : MonoBehaviour
 
     private IEnumerator LoadSceneWithLoadingScreen(string sceneName)
     {
+        IsPlayLoading = true;
         yield return new WaitForSecondsRealtime(0);
-        SceneManager.LoadScene(loadingSceneName, LoadSceneMode.Additive);
-        yield return new WaitForSecondsRealtime(fadeTime);
+        
         EndLoading = false;
+        controller.gameObject.SetActive(true);
+        controller.PlayLoading();
+        yield return new WaitForSecondsRealtime(fadeTime);
 
         yield return new WaitUntil(() => EndLoading);
-        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-        SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
-        yield return null;
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));        
+        SceneManager.LoadScene(sceneName);
 
         yield return new WaitForSecondsRealtime(fadeTime);
-        SceneManager.UnloadSceneAsync(loadingSceneName);
+        controller.gameObject.SetActive(false);
+        IsPlayLoading = false;
     }
 
     private void Awake()
@@ -40,6 +45,10 @@ public class LoadingScene : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+
+            controller = Instantiate(prefab);
+            controller.gameObject.SetActive(false);
+            DontDestroyOnLoad(controller);
         }
         else
         {

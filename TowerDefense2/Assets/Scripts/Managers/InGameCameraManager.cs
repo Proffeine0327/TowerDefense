@@ -84,7 +84,7 @@ public class InGameCameraManager : MonoBehaviour
                     camPivot.position = Vector3.Lerp(camPivot.position, curSelect.transform.position, Time.unscaledDeltaTime * lerpSpeed);
                     curDist = Mathf.Lerp(curDist, zoomDist, Time.unscaledDeltaTime * lerpSpeed);
                 }
-                catch (MissingReferenceException)
+                catch
                 {
                     CameraState = CameraState.normal;
                     Singleton.Get<DownMenuUI>().State = DownMenuState.none;

@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc46d4f965325724cafdb91d9bd012d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  justLookCamera: 1
 --- !u!95 &2173200760582785870
 Animator:
   serializedVersion: 5
@@ -156,7 +157,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &8120017082147268356
 MonoBehaviour:
   m_ObjectHideFlags: 0

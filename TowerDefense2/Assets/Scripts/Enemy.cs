@@ -26,40 +26,10 @@ public class Enemy : MonoBehaviour
         enemies.Add(this);
     }
 
-    protected TowerBase DetectTower()
-    {
-        var gm = Singleton.Get<GameManager>();
-
-        var detections =
-                TowerBase.towers
-                .OrderBy(item => Vector3.Distance(item.transform.position, transform.position))
-                .ToArray();
-
-        if (detections.Length > 0)
-        {
-            if (ReferenceEquals(detections[0].gameObject, gm.MainCastle))
-            {
-                if (gm.ExistSubCastles)
-                {
-                    var detectionSubCastle =
-                        TowerBase.towers
-                        .Where(item => item is Castle)
-                        .OrderBy(item => Vector3.Distance(item.transform.position, transform.position))
-                        .ToArray();
-
-                    return detectionSubCastle[0];
-                }
-            }
-            return detections[0];
-        }
-        return null;
-    }
-
     protected TowerBase DetectTower(params System.Func<TowerBase, bool>[] priorities)
     {
         var gm = Singleton.Get<GameManager>();
 
-        Debug.Log(TowerBase.towers.Count);
         var detections =
                 TowerBase.towers
                 .OrderBy(item => Vector3.Distance(item.transform.position, transform.position))

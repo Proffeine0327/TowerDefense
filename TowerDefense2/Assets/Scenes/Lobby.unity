@@ -75148,7 +75148,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6640975995584074682, guid: ed726631fcdd5de46a785bfd3ecf322a, type: 3}
+      propertyPath: justLookCamera
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 3333171740162476691, guid: ed726631fcdd5de46a785bfd3ecf322a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ed726631fcdd5de46a785bfd3ecf322a, type: 3}
 --- !u!4 &1744771104 stripped
 Transform:
@@ -93179,8 +93184,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b24931d95b653949a9aad89c184e0b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefab: {fileID: 8048855344508624381, guid: a98330294fe84f44ea15c039ffef8d33, type: 3}
   fadeTime: 1.5
-  loadingSceneName: LoadingScene
 --- !u!1001 &2116991527
 PrefabInstance:
   m_ObjectHideFlags: 0

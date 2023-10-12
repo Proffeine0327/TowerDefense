@@ -10,8 +10,8 @@ public class MainCastle : TowerBase
 
     protected override void Awake()
     {
-        base.Awake();
         towers.Add(this);
+        base.Awake();
     }
 
     protected override void Update()

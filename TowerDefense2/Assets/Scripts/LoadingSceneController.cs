@@ -16,10 +16,7 @@ public class LoadingSceneController : MonoBehaviour
 
     private float progress;
     
-    private void Start()
-    {
-        StartCoroutine(LoadingDisplayRoutine());
-    }
+    public void PlayLoading() => StartCoroutine(LoadingDisplayRoutine());
 
     private IEnumerator LoadingDisplayRoutine()
     {

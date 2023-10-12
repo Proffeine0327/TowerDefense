@@ -19,11 +19,13 @@ public class DownMenuUI : MonoBehaviour
         itemBtn.onClick.AddListener(() =>
         {
             State = State == DownMenuState.item ? DownMenuState.none : DownMenuState.item;
+            Singleton.Get<InGameCameraManager>().CameraState = CameraState.normal;
             Singleton.Get<SelectManager>().Unselect();
         });
         towerBtn.onClick.AddListener(() =>
         {
             State = State == DownMenuState.tower ? DownMenuState.none : DownMenuState.tower;
+            Singleton.Get<InGameCameraManager>().CameraState = CameraState.normal;
             Singleton.Get<SelectManager>().Unselect();
         });
     }

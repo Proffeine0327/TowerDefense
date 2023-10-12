@@ -41,16 +41,14 @@ public class DisappearRecon : Recon, ISelectable
             Debug.Log(pos);
         }
 
-        agent = GetComponent<NavMeshAgent>();
-        agent.enabled = true;
-        recons.Add(this);
         StartCoroutine(MoveRoutine());
         StartCoroutine(DisappearRoutine());
     }
 
     protected override void Start()
     {
-        
+        agent = GetComponent<NavMeshAgent>();
+        recons.Add(this);
     }
 
     private IEnumerator DisappearRoutine()

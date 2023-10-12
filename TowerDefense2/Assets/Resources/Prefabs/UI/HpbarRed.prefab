@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc46d4f965325724cafdb91d9bd012d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  justLookCamera: 1
 --- !u!95 &4050284805975316296
 Animator:
   serializedVersion: 5

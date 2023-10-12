@@ -13,8 +13,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject[] enemies;
     [SerializeField] private GameObject boss;
     [SerializeField] private Transform[] spawnPoints;
-    [SerializeField] private GameObject mainCastle;
-    [SerializeField] private GameObject[] subCastles;
+    [SerializeField] private MainCastle mainCastle;
+    [SerializeField] private Castle[] subCastles;
     [SerializeField] private DisappearRecon reconPrefeb;
 
     public bool ExistSubCastles
@@ -32,8 +32,8 @@ public class GameManager : MonoBehaviour
     }
     public int Money { get; set; }
     public int Wave { get; private set; }
-    public GameObject MainCastle => mainCastle;
-    public GameObject[] SubCastles => subCastles;
+    public MainCastle MainCastle => mainCastle;
+    public Castle[] SubCastles => subCastles;
     public int MaxWave => waveAmount;
     public float WaveProgress { get; private set; }
     public int Stage => stage;

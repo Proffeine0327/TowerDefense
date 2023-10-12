@@ -38,7 +38,7 @@ public class Recon : MonoBehaviour, ISelectable, IUpgradeable
             .OrderBy(item => Vector3.Distance(transform.position, item.transform.position))
             .ToArray();
 
-        agent.enabled = detection.Length == 0;
+        agent.enabled = detection?.Length == 0;
 
         if (curAttackDelay > 0)
         {
@@ -48,6 +48,10 @@ public class Recon : MonoBehaviour, ISelectable, IUpgradeable
         {
             if (detection.Length > 0)
             {
+                var relative = detection[0].transform.position - transform.position;
+                var angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.Euler(0, angle, 0);
+
                 detection[0].Damage(stats[level].damage);
                 curAttackDelay = stats[level].attackDelay;
                 PrefabContainer

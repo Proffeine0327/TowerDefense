@@ -44,7 +44,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 3461264067366877015}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.21
+  m_Radius: 0.1
   m_Speed: 5
   m_Acceleration: 50
   avoidancePriority: 50
@@ -202,6 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc46d4f965325724cafdb91d9bd012d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  justLookCamera: 0
 --- !u!95 &3461264067389419974
 Animator:
   serializedVersion: 5
@@ -212,7 +213,7 @@ Animator:
   m_GameObject: {fileID: 3461264067389419978}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1d203452f65c72f41bd880c2d6bfc47f, type: 2}
+  m_Controller: {fileID: 9100000, guid: 445093751de196e4eaca258f9520aed6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
