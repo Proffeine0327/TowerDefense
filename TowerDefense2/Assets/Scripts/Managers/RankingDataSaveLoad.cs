@@ -6,12 +6,21 @@ using UnityEngine;
 
 public class RankingDataSaveLoad : MonoBehaviour
 {
-    public static string Path => Directory.GetParent(Application.dataPath).FullName + "/rank.text";
+    public static string Path
+    {
+        get
+        {
+#if UNITY_EDITOR
+            return Application.dataPath + "/rank.text";
+#endif
+            return Directory.GetParent(Application.dataPath).FullName + "/rank.text";
+        }
+    }
 
     public static void Save(List<(int index, string name, int score)> datas)
     {
         var sb = new StringBuilder();
-        foreach(var data in datas) sb.Append(data.index).Append(',').Append(data.name).Append(',').Append(data.score).Append('\n');
+        foreach (var data in datas) sb.Append(data.index).Append(',').Append(data.name).Append(',').Append(data.score).Append('\n');
         File.WriteAllText(Path, sb.ToString());
     }
 
@@ -21,9 +30,9 @@ public class RankingDataSaveLoad : MonoBehaviour
         var rows = content.Split('\n');
 
         var result = new List<(int index, string name, int score)>();
-        foreach(var row in rows)
+        foreach (var row in rows)
         {
-            if(string.IsNullOrWhiteSpace(row)) continue;
+            if (string.IsNullOrWhiteSpace(row)) continue;
             var items = row.Split('\n');
             var index = int.Parse(items[0]);
             var name = items[1];

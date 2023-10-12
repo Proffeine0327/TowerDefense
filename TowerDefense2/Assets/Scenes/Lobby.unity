@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3150,7 +3150,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 757985602}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LobbyController, Assembly-CSharp
         m_MethodName: Setting
         m_Mode: 3
@@ -17087,7 +17087,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 757985602}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LobbyController, Assembly-CSharp
         m_MethodName: GameStart
         m_Mode: 1
@@ -18536,7 +18536,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 757985602}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LobbyController, Assembly-CSharp
         m_MethodName: GameHowToPlay
         m_Mode: 3
@@ -27117,8 +27117,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 635410376}
-  - component: {fileID: 635410377}
-  - component: {fileID: 635410378}
   m_Layer: 0
   m_Name: Environment
   m_TagString: Untagged
@@ -27143,74 +27141,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &635410377
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 635410375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac7c12b5200e1c94997a3a3e00239ad5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rankData:
-  - {fileID: 11400000, guid: 89042c41b40b73847894116f6b88cc82, type: 2}
-  - {fileID: 11400000, guid: c49fbe3d7c24d9544a049f65fadc39e0, type: 2}
-  - {fileID: 11400000, guid: eac8e2b8a2ebaeb4597d071e849202ee, type: 2}
-  - {fileID: 11400000, guid: 07eb209148ab23949893d45a763ec1e4, type: 2}
-  - {fileID: 11400000, guid: 054f4b924d6fbd94d8b442f89aaed1b5, type: 2}
-  - {fileID: 11400000, guid: 1343a2307b1a14148b63729a8daf969b, type: 2}
-  - {fileID: 11400000, guid: 7c3e184c82e8fd04fb722d89b6f11ce8, type: 2}
-  - {fileID: 11400000, guid: d6df87ef1a0dd2e4497e431045df2571, type: 2}
-  - {fileID: 11400000, guid: 412e7697224374d409f96b0cce677f56, type: 2}
-  - {fileID: 11400000, guid: 5803fead6535c714f84cf14e9dd07e3a, type: 2}
---- !u!114 &635410378
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 635410375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 683b6ae8e4268354fabfb8717c9ed586, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rankData:
-  - {fileID: 11400000, guid: 89042c41b40b73847894116f6b88cc82, type: 2}
-  - {fileID: 11400000, guid: c49fbe3d7c24d9544a049f65fadc39e0, type: 2}
-  - {fileID: 11400000, guid: eac8e2b8a2ebaeb4597d071e849202ee, type: 2}
-  - {fileID: 11400000, guid: 07eb209148ab23949893d45a763ec1e4, type: 2}
-  - {fileID: 11400000, guid: 054f4b924d6fbd94d8b442f89aaed1b5, type: 2}
-  - {fileID: 11400000, guid: 1343a2307b1a14148b63729a8daf969b, type: 2}
-  - {fileID: 11400000, guid: 7c3e184c82e8fd04fb722d89b6f11ce8, type: 2}
-  - {fileID: 11400000, guid: d6df87ef1a0dd2e4497e431045df2571, type: 2}
-  - {fileID: 11400000, guid: 412e7697224374d409f96b0cce677f56, type: 2}
-  - {fileID: 11400000, guid: 5803fead6535c714f84cf14e9dd07e3a, type: 2}
-  nameText:
-  - {fileID: 1883060409}
-  - {fileID: 478154405}
-  - {fileID: 1212835596}
-  - {fileID: 476743703}
-  - {fileID: 1607756897}
-  - {fileID: 1504353892}
-  - {fileID: 725264426}
-  - {fileID: 770514983}
-  - {fileID: 2092210643}
-  - {fileID: 285536404}
-  scoreText:
-  - {fileID: 1188248006}
-  - {fileID: 1779243206}
-  - {fileID: 455019253}
-  - {fileID: 923558843}
-  - {fileID: 1188279002}
-  - {fileID: 185333848}
-  - {fileID: 940684833}
-  - {fileID: 240903466}
-  - {fileID: 1000479699}
-  - {fileID: 1342929670}
 --- !u!1001 &636862439
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30672,7 +30602,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 757985602}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LobbyController, Assembly-CSharp
         m_MethodName: Ranking
         m_Mode: 3
@@ -30888,7 +30818,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 635410378}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Ranking, Assembly-CSharp
         m_MethodName: ResetRanking
         m_Mode: 1
@@ -31985,7 +31915,6 @@ GameObject:
   m_Component:
   - component: {fileID: 757985600}
   - component: {fileID: 757985601}
-  - component: {fileID: 757985602}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -32036,26 +31965,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &757985602
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 757985599}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5198929e5f4c4d44a2634297a5fc5b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menu: {fileID: 1354618879}
-  win:
-  - {fileID: 1438769720}
-  - {fileID: 500500640}
-  - {fileID: 2110663225}
-  isHTPbuttonDown: 0
-  isSettingbuttonDown: 0
-  isRankingbuttonDown: 0
 --- !u!1001 &760172936
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45388,6 +45297,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5035346635589729328, guid: c3a6c2b32168cdd4e8b436707f69c504, type: 3}
   m_PrefabInstance: {fileID: 1060763538}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1061233340
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1061233341}
+  - component: {fileID: 1061233342}
+  m_Layer: 0
+  m_Name: Test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1061233341
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1061233340}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 409.81415, y: 732.70856, z: 80.34088}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1061233342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1061233340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 451acf1a07fabcd409c2652d41ac905c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1062139899
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -58621,7 +58574,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 757985602}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LobbyController, Assembly-CSharp
         m_MethodName: Ranking
         m_Mode: 3
@@ -68660,7 +68613,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 757985602}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LobbyController, Assembly-CSharp
         m_MethodName: GameQuit
         m_Mode: 1
@@ -86834,7 +86787,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 757985602}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LobbyController, Assembly-CSharp
         m_MethodName: GameHowToPlay
         m_Mode: 3
@@ -91854,7 +91807,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 757985602}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LobbyController, Assembly-CSharp
         m_MethodName: Setting
         m_Mode: 3
@@ -93182,6 +93135,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5035346635589729328, guid: c3a6c2b32168cdd4e8b436707f69c504, type: 3}
   m_PrefabInstance: {fileID: 2115720991}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2116824783
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2116824784}
+  - component: {fileID: 2116824785}
+  m_Layer: 0
+  m_Name: LoadingScene
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2116824784
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116824783}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 409.81415, y: 732.70856, z: 80.34088}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2116824785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116824783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b24931d95b653949a9aad89c184e0b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeTime: 1.5
+  loadingSceneName: LoadingScene
 --- !u!1001 &2116991527
 PrefabInstance:
   m_ObjectHideFlags: 0

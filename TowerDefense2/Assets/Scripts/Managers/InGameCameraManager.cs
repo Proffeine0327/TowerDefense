@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -15,7 +16,11 @@ public class InGameCameraManager : MonoBehaviour
     [SerializeField] private Camera minimapCam;
     [SerializeField] private Transform camPivot;
     [SerializeField] private Transform normalPivot;
+    [Header("Key")]
+    [SerializeField] private Transform mainCastlePos;
+    [SerializeField] private Transform[] subCastlePos;
 
+    private int subCastlePosIndex;
     private float curDist;
     private Vector3 storePosition;
 
@@ -73,54 +78,105 @@ public class InGameCameraManager : MonoBehaviour
                 curDist = Mathf.Lerp(curDist, normalDist, Time.unscaledDeltaTime * lerpSpeed);
                 break;
             case CameraState.focus:
-                var curSelect = Singleton.Get<SelectManager>().SelectedObject;
-                if(ReferenceEquals(curSelect, null))
+                try
+                {
+                    var curSelect = Singleton.Get<SelectManager>().SelectedObject;
+                    camPivot.position = Vector3.Lerp(camPivot.position, curSelect.transform.position, Time.unscaledDeltaTime * lerpSpeed);
+                    curDist = Mathf.Lerp(curDist, zoomDist, Time.unscaledDeltaTime * lerpSpeed);
+                }
+                catch (MissingReferenceException)
                 {
                     CameraState = CameraState.normal;
+                    Singleton.Get<DownMenuUI>().State = DownMenuState.none;
                     break;
                 }
-
-                camPivot.position = Vector3.Lerp(camPivot.position, curSelect.transform.position, Time.unscaledDeltaTime * lerpSpeed);
-                curDist = Mathf.Lerp(curDist, zoomDist, Time.unscaledDeltaTime * lerpSpeed);
                 break;
             case CameraState.free:
                 curDist = Mathf.Lerp(curDist, normalDist, Time.unscaledDeltaTime * lerpSpeed);
                 break;
         }
         mainCamera.transform.position = camPivot.position + -mainCamera.transform.forward * curDist;
+        Key();
+    }
 
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+    private void Key()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            Singleton.Get<SelectManager>().Select(Singleton.Get<GameManager>().MainCastle.GetComponent<ISelectable>());
-            CameraState = CameraState.focus;
+            camPivot.position = mainCastlePos.position;
+            CameraState = CameraState.free;
+            Singleton.Get<DownMenuUI>().State = DownMenuState.none;
         }
-        if(Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            Singleton.Get<SelectManager>().Select(Singleton.Get<GameManager>().MainCastle.GetComponent<ISelectable>());
-            CameraState = CameraState.focus;
+            if (subCastlePos.Length == 0) return;
+
+            subCastlePosIndex++;
+            if (subCastlePosIndex == subCastlePos.Length) subCastlePosIndex = 0;
+
+            camPivot.position = subCastlePos[subCastlePosIndex].position;
+            CameraState = CameraState.free;
+            Singleton.Get<DownMenuUI>().State = DownMenuState.none;
         }
-        if(Input.GetKeyDown(KeyCode.Alpha3))
+        if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            Singleton.Get<SelectManager>().Select(Singleton.Get<GameManager>().MainCastle.GetComponent<ISelectable>());
-            CameraState = CameraState.focus;
-        }
-        if(Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            if(storePosition == Vector3.zero)
+            if (Singleton.Get<SelectManager>().SelectedObject is not Recon)
             {
-                Singleton.Get<SelectManager>().Select(Singleton.Get<GameManager>().MainCastle.GetComponent<ISelectable>());
-                CameraState = CameraState.focus;
+                foreach (var r in Recon.recons)
+                {
+                    CameraState = CameraState.focus;
+                    Singleton.Get<SelectManager>().Select(r);
+                    Singleton.Get<DownMenuUI>().State = DownMenuState.inspect;
+                    return;
+                }
+                return;
+            }
+
+            CameraState = CameraState.focus;
+            var next = false;
+            foreach (var r in Recon.recons)
+            {
+                if (ReferenceEquals(r, Singleton.Get<SelectManager>().SelectedObject as Recon))
+                {
+                    next = true;
+                    continue;
+                }
+
+                if (next)
+                {
+                    Singleton.Get<SelectManager>().Select(r);
+                    Singleton.Get<DownMenuUI>().State = DownMenuState.inspect;
+                    return;
+                }
+            }
+            if (next)
+            {
+                foreach (var r in Recon.recons)
+                {
+                    Singleton.Get<SelectManager>().Select(r);
+                    Singleton.Get<DownMenuUI>().State = DownMenuState.inspect;
+                    return;
+                }
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            if (storePosition == Vector3.zero)
+            {
+                camPivot.position = mainCastlePos.position;
+                CameraState = CameraState.free;
             }
             else
             {
                 camPivot.position = storePosition;
                 CameraState = CameraState.free;
             }
+            Singleton.Get<DownMenuUI>().State = DownMenuState.none;
         }
-        if(Input.GetKeyDown(KeyCode.Alpha0))
+        if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             storePosition = camPivot.position;
+            Singleton.Get<DownMenuUI>().State = DownMenuState.none;
         }
-
     }
 }

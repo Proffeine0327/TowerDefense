@@ -82,12 +82,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fce4a5442e334464da62971903440aaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stat:
-    maxhp: 0
+  stats:
+  - maxhp: 0
     damage: 5
-    nextRequireCost: 0
+    nextRequireCost: -1
     attackDelay: 0.33
-    range: 3.5
+    range: 4
     speed: 4
   explain: "\uC18C\uD658\uB41C \uC815\uCC30 \uC720\uB2DB\uC785\uB2C8\uB2E4.\n\uC0DD\uC131\uB418\uACE0
     60\uCD08 \uD6C4\uC5D0 \uC0AC\uB77C\uC9D1\uB2C8\uB2E4."

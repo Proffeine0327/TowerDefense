@@ -6,12 +6,14 @@ using UnityEngine.AI;
 
 public class Recon : MonoBehaviour, ISelectable, IUpgradeable
 {
-    [SerializeField] private LevelStat[] stats;
-    [TextArea(3, 7)][SerializeField] private string explain;
+    public static HashSet<Recon> recons = new();
 
-    private int level;
-    private float curAttackDelay;
-    private NavMeshAgent agent;
+    [SerializeField] protected LevelStat[] stats;
+    [TextArea(3, 7)][SerializeField] protected string explain;
+
+    protected int level;
+    protected float curAttackDelay;
+    protected NavMeshAgent agent;
 
     public virtual string ExplainContent =>
     $"DPS. {1 / stats[level].attackDelay * stats[level].damage:0.##}\n" +
@@ -19,11 +21,12 @@ public class Recon : MonoBehaviour, ISelectable, IUpgradeable
     $"Level. {level + 1}\n\n" +
     explain;
 
-    public int RequireCost => stats[level].nextRequireCost;
+    public virtual int RequireCost => stats[level].nextRequireCost;
 
-    private void Start()
+    protected virtual void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        recons.Add(this);
         StartCoroutine(MoveRoutine());
     }
 
@@ -57,7 +60,7 @@ public class Recon : MonoBehaviour, ISelectable, IUpgradeable
         agent.speed = stats[level].speed;
     }
 
-    private IEnumerator MoveRoutine()
+    protected IEnumerator MoveRoutine()
     {
         while (true)
         {
@@ -74,18 +77,18 @@ public class Recon : MonoBehaviour, ISelectable, IUpgradeable
         }
     }
 
-    public void Upgrade()
+    public virtual void Upgrade()
     {
         if (stats[level].nextRequireCost != -1)
             level++;
     }
 
-    public void Select()
+    public virtual void Select()
     {
         
     }
 
-    public void Unselect()
+    public virtual void Unselect()
     {
         
     }

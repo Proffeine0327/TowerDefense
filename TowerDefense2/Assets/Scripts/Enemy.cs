@@ -59,6 +59,7 @@ public class Enemy : MonoBehaviour
     {
         var gm = Singleton.Get<GameManager>();
 
+        Debug.Log(TowerBase.towers.Count);
         var detections =
                 TowerBase.towers
                 .OrderBy(item => Vector3.Distance(item.transform.position, transform.position))

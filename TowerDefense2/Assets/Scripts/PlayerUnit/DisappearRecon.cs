@@ -4,23 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class DisappearRecon : MonoBehaviour, ISelectable
+public class DisappearRecon : Recon, ISelectable
 {
-    [SerializeField] private LevelStat stat;
-    [TextArea(3, 7)][SerializeField] private string explain;
-
     private int remainTime = 60;
-    private int level;
-    private float curAttackDelay;
-    private NavMeshAgent agent;
 
-    public virtual string ExplainContent =>
+    public override string ExplainContent =>
         $"Remain. {remainTime / 60:0}:{remainTime:00}\n" +
-        $"DPS. {1 / stat.attackDelay * stat.damage:0.##}\n" +
-        $"Speed. {stat.speed}\n\n" +
+        $"DPS. {1 / stats[0].attackDelay * stats[0].damage:0.##}\n" +
+        $"Speed. {stats[0].speed}\n\n" +
         explain;
 
-    public int RequireCost => stat.nextRequireCost;
+    public override int RequireCost => stats[0].nextRequireCost;
 
     public void Init()
     {
@@ -49,78 +43,20 @@ public class DisappearRecon : MonoBehaviour, ISelectable
 
         agent = GetComponent<NavMeshAgent>();
         agent.enabled = true;
+        recons.Add(this);
         StartCoroutine(MoveRoutine());
         StartCoroutine(DisappearRoutine());
+    }
+
+    protected override void Start()
+    {
+        
     }
 
     private IEnumerator DisappearRoutine()
     {
         while(remainTime-- > 0) yield return new WaitForSeconds(1f);
+        recons.Remove(this);
         Destroy(gameObject);
-    }
-
-    protected virtual void Update()
-    {
-        var detection =
-            Enemy.enemies
-            .Where(item => Vector3.Distance(transform.position, item.transform.position) <= stat.range)
-            .OrderBy(item => Vector3.Distance(transform.position, item.transform.position))
-            .ToArray();
-
-        agent.enabled = detection.Length == 0;
-
-        if (curAttackDelay > 0)
-        {
-            curAttackDelay -= Time.deltaTime;
-        }
-        else
-        {
-            if (detection.Length > 0)
-            {
-                detection[0].Damage(stat.damage);
-                curAttackDelay = stat.attackDelay;
-                PrefabContainer
-                    .Instantiate("TowerBulletLine")
-                    .GetComponent<BulletLine>()
-                    .Init(transform.position, detection[0].transform.position);
-            }
-        }
-
-        agent.speed = stat.speed;
-    }
-
-    private IEnumerator MoveRoutine()
-    {
-        yield return null;
-
-        while (true)
-        {
-            var point = Singleton.Get<PathPoint>().GetRandomPoint();
-
-            while (Vector3.Distance(transform.position, point) > 1.5f)
-            {
-                if (agent.isActiveAndEnabled)
-                    agent.SetDestination(point);
-                yield return null;
-            }
-
-            yield return new WaitForSeconds(2);
-        }
-    }
-
-    public void Upgrade()
-    {
-        if (stat.nextRequireCost != -1)
-            level++;
-    }
-
-    public void Select()
-    {
-
-    }
-
-    public void Unselect()
-    {
-
     }
 }

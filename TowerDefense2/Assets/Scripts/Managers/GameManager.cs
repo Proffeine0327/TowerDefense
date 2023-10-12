@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -85,6 +84,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator GameRoutine()
     {
+        yield return new WaitForSeconds(3f);
+
         for (Wave = 0; Wave < waveAmount; Wave++)
         {
             for (int spawn = 0; spawn < spawnAmount; spawn++)
