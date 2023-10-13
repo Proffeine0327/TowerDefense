@@ -27,7 +27,7 @@ public class SelectManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(0) && !Singleton.Get<InGameCameraManager>().IsUIClick)
         {
             var ray = Singleton.Get<InGameCameraManager>().CurrentMousePosRay;
             if(Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, layer) && hitInfo.transform.TryGetComponent<ISelectable>(out var comp))

@@ -3,32 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LoadingScene : MonoBehaviour
+public class ScreenFade : MonoBehaviour
 {
-    private static LoadingScene instance;
+    private static ScreenFade instance;
 
-    [SerializeField] private LoadingSceneController prefab;
+    [SerializeField] private ScreenFadeController prefab;
     [SerializeField] private float fadeTime;
 
-    private LoadingSceneController controller;
+    private ScreenFadeController controller;
 
     public static bool IsPlayLoading { get; private set; }
     public static bool EndLoading { get; set; }
     public static float FadeTime => instance.fadeTime;
 
-    public static void LoadScene(string sceneName)
+    public static void LoadScene(string sceneName, bool playLoading = true)
     {
-        instance.StartCoroutine(instance.LoadSceneWithLoadingScreen(sceneName));
+        instance.StartCoroutine(instance.LoadSceneWithLoadingScreen(sceneName, playLoading));
     }
 
-    private IEnumerator LoadSceneWithLoadingScreen(string sceneName)
+    private IEnumerator LoadSceneWithLoadingScreen(string sceneName, bool playLoading)
     {
         IsPlayLoading = true;
         yield return new WaitForSecondsRealtime(0);
         
         EndLoading = false;
         controller.gameObject.SetActive(true);
-        controller.PlayLoading();
+        controller.PlayLoading(playLoading);
         yield return new WaitForSecondsRealtime(fadeTime);
 
         yield return new WaitUntil(() => EndLoading);

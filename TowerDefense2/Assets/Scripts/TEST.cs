@@ -12,6 +12,6 @@ public class TEST : MonoBehaviour
     private IEnumerator Test()
     {
         yield return new WaitForSeconds(1f);
-        LoadingScene.LoadScene("Stage1");
+        ScreenFade.LoadScene("Stage1");
     }
 }
