@@ -12,7 +12,8 @@ public class LobbyUI : MonoBehaviour
 
     private void Awake()
     {
-        gameStart.onClick.AddListener(() => { if (!ScreenFade.IsPlayLoading) ScreenFade.LoadScene("Stage1"); });
+        gameStart.onClick.AddListener(() => ScreenFade.LoadScene("Stage1"));
         exit.onClick.AddListener(() => Application.Quit());
+        ranking.onClick.AddListener(() => ScreenFade.LoadScene("Rank", false));
     }
 }

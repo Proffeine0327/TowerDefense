@@ -18,20 +18,21 @@ public class ScreenFade : MonoBehaviour
 
     public static void LoadScene(string sceneName, bool playLoading = true)
     {
+        if(IsPlayLoading) return;
+
+        IsPlayLoading = true;
+        EndLoading = false;
         instance.StartCoroutine(instance.LoadSceneWithLoadingScreen(sceneName, playLoading));
     }
 
     private IEnumerator LoadSceneWithLoadingScreen(string sceneName, bool playLoading)
     {
-        IsPlayLoading = true;
-        yield return new WaitForSecondsRealtime(0);
-        
-        EndLoading = false;
         controller.gameObject.SetActive(true);
         controller.PlayLoading(playLoading);
         yield return new WaitForSecondsRealtime(fadeTime);
 
         yield return new WaitUntil(() => EndLoading);
+        yield return new WaitForSecondsRealtime(0);
         SceneManager.LoadScene(sceneName);
 
         yield return new WaitForSecondsRealtime(fadeTime);

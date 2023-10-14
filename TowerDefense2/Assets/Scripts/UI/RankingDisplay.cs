@@ -14,8 +14,8 @@ public class RankingDisplay : MonoBehaviour
     public void Set(int index, string name, int score)
     {
         if(this.index != null) this.index.gameObject.SetActive(index != -1);
-        if(this.player != null) this.index.gameObject.SetActive(index != -1);
-        if(this.index != null) this.index.gameObject.SetActive(index != -1);
+        if(this.player != null) this.player.gameObject.SetActive(index != -1);
+        if(this.score != null) this.score.gameObject.SetActive(index != -1);
 
         if(index == -1) return;
 
@@ -40,8 +40,9 @@ public class RankingDisplay : MonoBehaviour
 
     private void Awake()
     {
-        index = transform.GetChild(0)?.GetComponent<TextMeshProUGUI>();
-        player = transform.GetChild(1)?.GetComponent<TextMeshProUGUI>();
-        score = transform.GetChild(2)?.GetComponent<TextMeshProUGUI>();
+        index = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        if(isCombine) return;
+        player = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        score = transform.GetChild(2).GetComponent<TextMeshProUGUI>();
     }
 }

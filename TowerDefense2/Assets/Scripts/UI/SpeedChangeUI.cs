@@ -15,6 +15,8 @@ public class SpeedChangeUI : MonoBehaviour
     {
         btn.onClick.AddListener(() =>
         {
+            if(Singleton.Get<GameManager>().IsGameEnd) return;
+
             index++;
             if(index == 3) index = 0;
             

@@ -8,10 +8,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Lobby.unity
     guid: 0fb94955f45930e4897a6de1ecc79d4e
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/LoadingScene.unity
     guid: 68539fea25a79094688e8fcd96e95e49
   - enabled: 1
     path: Assets/Scenes/Stage1.unity
     guid: a212fcf50f42ac64f9acbc2b77dcc681
+  - enabled: 1
+    path: Assets/Scenes/RankWrite.unity
+    guid: 44b27693d4bf59648a4eaf7db18601e6
+  - enabled: 1
+    path: Assets/Scenes/Rank.unity
+    guid: a0d1b71b15e5325439043bc97ef388e8
   m_configObjects: {}

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour
     public int MaxWave => waveAmount;
     public float WaveProgress { get; private set; }
     public int Stage => stage;
+    public bool IsGameEnd { get; private set; }
 
     //effect
     public float EnemySlowTime { get; private set; }
@@ -66,6 +68,9 @@ public class GameManager : MonoBehaviour
     {
         Singleton.Register(this);
 
+        Tower.towers.Clear();
+        Enemy.enemies.Clear();
+        Recon.recons.Clear();
         Money = startMoney;
     }
 
@@ -80,6 +85,25 @@ public class GameManager : MonoBehaviour
         if(GainAdditiveGoldTime > 0) GainAdditiveGoldTime -= Time.deltaTime;
         if(ReduceAttackDelayTime > 0) ReduceAttackDelayTime -= Time.deltaTime;
         if(StopEnemyAttackTime > 0) StopEnemyAttackTime -= Time.deltaTime;
+
+        if(mainCastle.IsDestroyed && !IsGameEnd)
+        {
+            IsGameEnd = true;
+            StartCoroutine(GameEndRoutine());
+        }
+    }
+
+    private IEnumerator GameEndRoutine()
+    {
+        var waitReal = new WaitForSecondsRealtime(0);
+
+        Singleton.Get<GameTimeManager>().TimeScale = 1;
+        Singleton.Get<GameTimeManager>().IsGameStopped = true;
+        yield return new WaitForSecondsRealtime(2f);
+
+        ScreenFade.LoadScene("RankWrite");
+        while(!ScreenFade.EndLoading) yield return waitReal;
+        Singleton.Get<GameTimeManager>().IsGameStopped = false;
     }
 
     private IEnumerator GameRoutine()

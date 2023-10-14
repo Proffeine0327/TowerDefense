@@ -19,7 +19,7 @@ public class GameTimeManager : MonoBehaviour
 
     private void Update()
     {
-        Time.timeScale = timeScale;
+        Time.timeScale = TimeScale;
         PlayTime += Time.deltaTime;
     }
 }

@@ -11,9 +11,9 @@ public class RankingDataSaveLoad : MonoBehaviour
         get
         {
 #if UNITY_EDITOR
-            return Application.dataPath + "/rank.text";
+            return Application.dataPath + "/rank.txt";
 #endif
-            return Directory.GetParent(Application.dataPath).FullName + "/rank.text";
+            return Directory.GetParent(Application.dataPath).FullName + "/rank.txt";
         }
     }
 
@@ -26,14 +26,15 @@ public class RankingDataSaveLoad : MonoBehaviour
 
     public static List<(int index, string name, int score)> Load()
     {
+        if(!File.Exists(Path)) return new List<(int index, string name, int score)>();
+
         var content = File.ReadAllText(Path);
-        var rows = content.Split('\n');
+        var rows = content.Split('\n')[..^1];
 
         var result = new List<(int index, string name, int score)>();
         foreach (var row in rows)
         {
-            if (string.IsNullOrWhiteSpace(row)) continue;
-            var items = row.Split('\n');
+            var items = row.Split(',');
             var index = int.Parse(items[0]);
             var name = items[1];
             var score = int.Parse(items[2]);
